@@ -1,5 +1,3 @@
-name: Staging to Main Deployment
-
 on:
   push:
     branches:
@@ -8,7 +6,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -50,18 +47,18 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/staging' && needs.test.outputs.tests_passed == 'true'
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: SSH and deploy to Main branch
-      uses: appleboy/ssh-action@latest
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USERNAME }}
-        key: ${{ secrets.EC2_SSH_KEY }}
-        port: ${{ secrets.PORT }}
-        script: |
-          cd /home/ubuntu  # Replace with the correct path
-          git fetch
-          git checkout -b main origin/staging
-          # Additional deployment steps if needed
+      - name: SSH and deploy to Main branch
+        uses: appleboy/ssh-action@latest
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /path/to/staging/repository  # Replace with the correct path
+            git fetch
+            git checkout -b main origin/staging
+            # Additional deployment steps if needed
