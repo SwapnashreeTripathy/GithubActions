@@ -50,14 +50,16 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Setup SSH
-      uses: actions/setup-ssh-action@v3
+    - name: Upload SSH private key
+      uses: actions/upload-artifact@v3
       with:
-        github_secret_tokens: ${{ secrets.EC2_SSH_KEY }}
+        name: ssh-private-key
+        path: ${{ secrets.EC2_SSH_KEY }}
 
     - name: Deploy to Main branch
       run: |
-        ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} -p ${{ secrets.PORT }} << EOF
+        chmod 600 ~/.ssh/id_rsa
+        ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} -p ${{ secrets.PORT }} -i ~/.ssh/id_rsa << EOF
           cd /home/ubuntu/  # Replace with the correct path
           git fetch
           git checkout -b main origin/staging
