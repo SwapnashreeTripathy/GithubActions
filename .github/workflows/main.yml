@@ -54,14 +54,13 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: ssh-private-key
-        path: ${{ secrets.EC2_SSH_KEY }}
+        path: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Deploy to Main branch
+    - name: Check SSH private key
       run: |
-        sudo chmod 600 /home/ubuntu/.ssh/id_rsa
-        ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} -p ${{ secrets.PORT }} -i /home/ubuntu/.ssh/id_rsa << EOF
-          cd /home/ubuntu/  # Replace with the correct path
-          git fetch
-          git checkout -b main origin/staging
-          # Additional deployment steps if needed
-        EOF
+        cat ~/.ssh/id_rsa
+
+    - name: Change SSH private key permissions
+      run: |
+        chmod 600 ~/.ssh/id_rsa
+        echo "Exit code: $?"
