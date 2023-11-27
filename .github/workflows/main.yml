@@ -47,18 +47,19 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/staging' && needs.test.outputs.tests_passed == 'true'
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: SSH and deploy to Main branch
-        uses: appleboy/ssh-action@latest
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: ${{ secrets.PORT }}
-          script: |
-            cd /path/to/staging/repository  # Replace with the correct path
-            git fetch
-            git checkout -b main origin/staging
-            # Additional deployment steps if needed
+    - name: Setup SSH
+      uses: actions/setup-ssh-action@v3
+      with:
+        github_secret_tokens: ${{ secrets.EC2_SSH_KEY }}
+
+    - name: Deploy to Main branch
+      run: |
+        ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} -p ${{ secrets.PORT }} << EOF
+          cd /home/ubuntu/  # Replace with the correct path
+          git fetch
+          git checkout -b main origin/staging
+          # Additional deployment steps if needed
+        EOF
