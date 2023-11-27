@@ -46,22 +46,17 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/staging' && needs.test.outputs.tests_passed == 'true'
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      
-    - name: SSH and deploy to Main branch
+    steps:         
+    - name: deployment step
       uses: appleboy/ssh-action@v1.0.0
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.EC2_SSH_KEY }}
         port: ${{ secrets.PORT }}
-        script: |
+        script: | 
           cd /home/ubuntu/
-          git checkout main
-          git pull origin staging  # Pull changes from staging to main
-          # Additional deployment steps if needed
+          git clone https://github.com/sayanalokesh/Jenkins.git
+          sudo apt install -y python3-pip
+          sudo pip install flask
+          # sudo python3 /home/ubuntu/Jenkins/app.py
