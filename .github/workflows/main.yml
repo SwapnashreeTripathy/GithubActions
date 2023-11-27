@@ -61,7 +61,7 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          cd /path/to/staging/repository
+          cd /home/ubuntu/
           git checkout main
           git pull origin staging  # Pull changes from staging to main
           # Additional deployment steps if needed
