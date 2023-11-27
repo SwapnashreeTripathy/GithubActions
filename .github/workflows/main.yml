@@ -1,0 +1,62 @@
+name: Staging to Main Deployment
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y python3-pip
+        sudo pip install -r requirements.txt  # Install dependencies from requirements.txt
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y python3-pip
+        sudo pip install -r requirements.txt  # Install dependencies from requirements.txt
+        
+    - name: Run tests
+      run: |
+        # Execute your testing scripts, assuming pytest is used
+        pytest test_app.py
+      continue-on-error: true  # Continue even if tests fail
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/staging' && job.test.outcome == 'success'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: SSH and deploy to Main branch
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd /path/to/staging/repository
+          git checkout main
+          git pull origin staging  # Pull changes from staging to main
+          # Additional deployment steps if needed
