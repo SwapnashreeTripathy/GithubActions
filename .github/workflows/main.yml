@@ -54,7 +54,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: ssh-private-key
-        path: ${{ secrets.SSH_PRIVATE_KEY }}
+        path: ${{ secrets.EC2_SSH_KEY }}
 
     - name: Check SSH private key
       run: |
