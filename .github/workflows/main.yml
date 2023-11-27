@@ -58,8 +58,8 @@ jobs:
 
     - name: Deploy to Main branch
       run: |
-        chmod 600 ~/.ssh/id_rsa
-        ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} -p ${{ secrets.PORT }} -i ~/.ssh/id_rsa << EOF
+        chmod 600 /home/ubuntu/.ssh/id_rsa
+        ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} -p ${{ secrets.PORT }} -i /home/ubuntu/.ssh/id_rsa << EOF
           cd /home/ubuntu/  # Replace with the correct path
           git fetch
           git checkout -b main origin/staging
