@@ -61,7 +61,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /path/to/staging/repository  # Replace with the correct path
+            cd /home/ubuntu  # Replace with the correct path
             git fetch
             git checkout -b main origin/staging
             # Additional deployment steps if needed
