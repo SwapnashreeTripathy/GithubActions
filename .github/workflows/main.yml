@@ -58,7 +58,7 @@ jobs:
 
     - name: Deploy to Main branch
       run: |
-        chmod 600 /home/ubuntu/.ssh/id_rsa
+        sudo chmod 600 /home/ubuntu/.ssh/id_rsa
         ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} -p ${{ secrets.PORT }} -i /home/ubuntu/.ssh/id_rsa << EOF
           cd /home/ubuntu/  # Replace with the correct path
           git fetch
