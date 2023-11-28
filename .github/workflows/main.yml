@@ -47,22 +47,22 @@ jobs:
           cd GithubActions
           sudo ls
           sudo git checkout staging
-          sudo echo "checked out to staging branch"
+          # sudo echo "checked out to staging branch"
           sudo git pull
-          sudo echo "pull has been successful"
+          # sudo echo "pull has been successful"
           sudo apt install -y python3-pip
           sudo pip install flask
           sudo pip install gunicorn          
           sudo gunicorn -w 4 -b 0.0.0.0:8000 app.py:app &
-          echo "app is up and running fine"
+          # echo "app is up and running fine"
           sudo git checkout production
-          echo "checked out to production branch"
+          # echo "checked out to production branch"
           sudo git pull
-          echo "pull has been successful"
+          # echo "pull has been successful"
           sudo git merge staging
-          echo "merge successful"
+          # echo "merge successful"
           sudo git push origin production
-          echo "pushed to production"
+          # echo "pushed to production"
           sudo git tag -a v1.0
           sudo git push origin v1.0
           # sudo python3 /home/ubuntu/Jenkins/app.py
