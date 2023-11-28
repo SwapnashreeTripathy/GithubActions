@@ -47,9 +47,9 @@ jobs:
           cd GithubActions
           sudo ls
           sudo git checkout staging
-          echo "checked out to staging branch"
+          sudo echo "checked out to staging branch"
           sudo git pull
-          echo "pull has been successful"
+          sudo echo "pull has been successful"
           sudo apt install -y python3-pip
           sudo pip install flask
           sudo pip install gunicorn          
