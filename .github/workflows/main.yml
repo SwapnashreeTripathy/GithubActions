@@ -44,12 +44,13 @@ jobs:
         script: | 
           cd /home/ubuntu/
           git clone https://github.com/sayanalokesh/GithubActions.git
+          cd GithubActions
           sudo git checkout staging
           sudo git pull
           sudo apt install -y python3-pip
           sudo pip install flask
           sudo pip install gunicorn
-          cd GithubActions
+          
           sudo gunicorn -w 4 -b 0.0.0.0:8000 app.py:app &
           sudo git checkout production
           sudo git pull
