@@ -50,7 +50,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}  # Replace with your SSH private key
           script: |
             # Commands to deploy to staging server
-            ssh -i ${{secrets.EC2_SSH_KEY}} ubuntu@ec2-52-66-160-84.ap-south-1.compute.amazonaws.com "cd /home/ubuntu && git pull origin staging && sudo systemctl restart jenkins"
+            ssh -i ${{secrets.EC2_SSH_KEY}} ubuntu@ec2-52-66-160-84.ap-south-1.compute.amazonaws.com "ls" # cd /home/ubuntu && git pull origin staging && sudo systemctl restart jenkins
 
 
   deploy-to-production:
@@ -67,7 +67,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}  # Replace with your SSH private key
           script: |
             # Commands to deploy to production server
-            ssh -i ${{secrets.EC2_SSH_KEY}} ubuntu@ec2-52-66-160-84.ap-south-1.compute.amazonaws.com "cd /home/ubuntu && git pull origin staging && sudo systemctl restart jenkins"
+            ssh -i ${{secrets.EC2_SSH_KEY}} ubuntu@ec2-52-66-160-84.ap-south-1.compute.amazonaws.com "ls"  # "cd /home/ubuntu && git pull origin staging && sudo systemctl restart jenkins"
 
 
 # on:
