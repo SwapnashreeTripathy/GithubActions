@@ -30,59 +30,7 @@ jobs:
       - name: Run Tests
         run: |
           pytest test_app.py  # Replace with your test file name
-
-      - name: Build
-        if: success()
-        run: |
-          # Any build steps needed before deployment
-
- #
-name: Ec2-deployment
-
-on: 
-  push:
-    branches: 
-      - main
-
-jobs: 
-  build:
-    runs-on: ubuntu-latest
-    
-    steps: 
-    - name: code checkout
-      uses: actions/checkout@v2
-      
-    - name: install dependencies
-      run: |
-        sudo apt update
-        sudo apt install python3-pip
-        sudo pip install flask
-        sudo pip install streamlit
-        sudo pip install pytest
-  test:
-    runs-on: ubuntu-latest
-    steps:     
-    
-    - name: code checkout
-      uses: actions/checkout@v2
-      
-    - name: install dependencies
-      run: |
-        sudo apt update
-        sudo apt install python3-pip
-        sudo pip install flask
-        sudo pip install pytest
-        
-    - name: build and test
-      run: |
-        # testing scripts
-        pytest test_app.py
-    
-    - name: pushing code to staging
-      run: |
-        # testcases are passed pushing code to staging
-        #git checkout staging
-        
+     
   deploy:
     runs-on: ubuntu-latest
     steps:         
@@ -131,7 +79,7 @@ jobs:
             sudo pip install gunicorn
             sudo gunicorn -w 4 -b 0.0.0.0:8000 app.py:app &
           # sudo python3 /home/ubuntu/Jenkins/app.py# Commands to deploy to production server
-            ssh -i ${{secrets.EC2_SSH_KEY}} ubuntu@ec2-52-66-160-84.ap-south-1.compute.amazonaws.com "ls"  # "cd /home/ubuntu && git pull origin staging && sudo systemctl restart jenkins"
+            # ssh -i ${{secrets.EC2_SSH_KEY}} ubuntu@ec2-52-66-160-84.ap-south-1.compute.amazonaws.com "ls"  # "cd /home/ubuntu && git pull origin staging && sudo systemctl restart jenkins"
 
 
 # on:
