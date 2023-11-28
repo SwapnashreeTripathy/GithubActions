@@ -50,7 +50,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}  # Replace with your SSH private key
           script: |
             # Commands to deploy to staging server
-            ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "cd /home/ubuntu && git pull origin staging && sudo systemctl restart jenkins"
+            ssh -v -o StrictHostKeyChecking=no ***@*** "cd /home/*** && git pull origin staging && sudo systemctl restart jenkins"
+
 
   deploy-to-production:
     runs-on: ubuntu-latest
@@ -66,7 +67,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}  # Replace with your SSH private key
           script: |
             # Commands to deploy to production server
-            ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "cd /home/ubuntu && git pull origin main && sudo systemctl restart jenkins"
+            ssh -v -o StrictHostKeyChecking=no ***@*** "cd /home/*** && git pull origin staging && sudo systemctl restart jenkins"
+
 
 # on:
 #   push:
